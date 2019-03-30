@@ -31,8 +31,11 @@ It's in Chinese but I try to translate the core steps below:
 In this way, if the state > 1 `isOpen()`  return true; using `uf.connected()` to tell `is.Full()`; in each `open()` check if the state of `uf.find(virtualTop)` equals 2 at the last line, using a private `boolean` to save this flag. 
 
 > Aggregate score: 101.25%
+>
 > Estimated student memory = 9.00 n^2 + 0.00 n + 184.00   (R^2 = 1.000)
+>
 > Test 2 (bonus): check that total memory <= 11 n^2 + 128 n + 1024 bytes
+>
 > ==> passed
 
 It feels good.
