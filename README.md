@@ -28,7 +28,7 @@ It's in Chinese but I try to translate the core steps below:
 2. When opening a site, assign 2 to its state if it's in the n-th row, or assign 1.
 3. Check the 4 neighbors using `uf.find()` : if the state of the neighbor site or that of the current site is 2, write both states to 2 and union the two sites.
 
-In this way, if the state > 1 `isOpen()`  return true; using `uf.connected()` to tell `is.Full()`; in each `open()` check if the state of `uf.find(virtualTop)` equals 2 at the last line, using a private `boolean` to save this flag. 
+In this way, if the state > 0 `isOpen()`  return true; using `uf.connected()` to tell `isFull()`; in each `open()` check if the state of `uf.find(virtualTop)` equals 2 at the last line, using a private `boolean` to save this flag. 
 
 > Aggregate score: 101.25%
 >
