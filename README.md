@@ -44,3 +44,5 @@ It feels good.
 
 
 
+## Week2: Deque&RandomizedQueue
+
