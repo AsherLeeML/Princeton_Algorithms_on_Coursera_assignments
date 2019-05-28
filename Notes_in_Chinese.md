@@ -16,9 +16,7 @@ typora-copy-images-to: attachments
 
 所以我依然觉得把思路分享出来不是件坏事。
 
-至于抄不抄这些代码就尽随读者。我想起上中学时的一些事情，同学里抄别人的答案、抄练习题答案的数不胜数。但到了现在都不是小孩子了，靠抄答案过关有用吗……
-
-总之，不管用什么方法，自己埋头尝试也罢，参考别人的思路和代码也罢，只要深入思考并付出努力，最后拿到这个分数的时候，你会感受到它的价值所在。
+不管用什么方法，自己埋头尝试也罢，参考别人的思路和代码也罢，只要深入思考并付出努力，最后拿到这个分数的时候，你会感受到它的价值所在。
 
 ****
 
@@ -56,7 +54,7 @@ https://segmentfault.com/a/1190000005345079#articleHeader1
 
 ****
 
-**剧透警告： 请仔细考虑是否阅读以下文字**
+**请仔细考虑是否阅读以下文字**
 
 > 1. 使用一个 `byte` 型`state`数组存储所有元素的“状态”：0 代表堵塞（blocked），1 代表打开（open），2 代表与底部连接；
 > 2. 打开一个节点（site）时，如果这个节点在第一行，将其与"虚拟顶"相连，在第 n 行（最后一行）就令对应的 `state` 为2，否则置1；
@@ -108,9 +106,11 @@ https://segmentfault.com/a/1190000005345079#articleHeader1
 
 ——初学者写代码容易出现各种各样的问题，所以一开始就要养成良好的代码习惯。
 
-
+![1559047604046](attachments/1559047604046.png)
 
 ## 第二周：Deque & RandomizedQueue
+
+![1559048412904](attachments/1559048412904.png)
 
 要求实现两个数据结构：双向队列和随机队列及其各自内部的迭代器。
 
@@ -266,4 +266,45 @@ i = n 时，得到结论。神奇吧？
 
 ## 第三周：Collinear
 
-这周的题又简单了一点。
+![1559047159999](attachments/1559047159999.png)
+
+这周的题又简单了一点。需要完成三个文件：`Point.java`， `BruteCollinearPoints.java`， `FastCollinearPoints.java` 。
+
+`Point.java` 几乎没有难度，`Comparator` 参考书或 slide 即可。需要注意的是 Client 的写法，我没好好读 API，在这儿卡了半天。在 `specification` 里其实是有的：
+
+```java
+        // read the n points from a file
+        In in = new In(args[0]);
+        int n = in.readInt();
+        Point[] points = new Point[n];
+        for (int i = 0; i < n; i++) {
+            int x = in.readInt();
+            int y = in.readInt();
+            points[i] = new Point(x, y);
+        }
+
+        // draw the points
+        StdDraw.enableDoubleBuffering();
+        StdDraw.setXscale(0, 32768);
+        StdDraw.setYscale(0, 32768);
+        StdDraw.setPenColor(StdDraw.BLACK);
+        StdDraw.setPenRadius(0.005);
+        for (Point p : points) {
+            p.draw();
+        }
+
+        // print and draw the line segments
+        FastCollinearPoints collinear = new FastCollinearPoints(points);
+        for (LineSegment segment : collinear.segments()) {
+            StdOut.println(segment);
+            segment.draw();
+        }
+        StdDraw.show();
+```
+
+一开始我照着 API 往上抄，折腾半天就是空白图，后来才发现是忘了设置 `scale` 。
+
+然后是 `BruteCollinearPoints` ，一定要先检查 corner-case。暴力解法很简单，四层循环即可。写完你就会发现这个方法的致命缺陷：无法处理四个以上的共线点（正如 `specification` 和 `checklist` 所说。
+
+改进方法说起来很简单，以每个点为“原点”分别排序。主要是处理边界稍微有些麻烦，需要前后想清楚。共线的点在排序后的位置是在一起的，而且可能有多余四点共线的情况。探索完成后要从上次结束位置的后一个点开始。需要判断是否重复记录，方法是对线段上的点排序，“原点”一定是这条线段的起点，如果不是，说明重复。本周题目没有 bonus。
+
